@@ -214,69 +214,6 @@ void coloredCube(){
     glEnd();
 //    glutSolidCube(0.5);
 }
-void coloredCuboid(){
-    
-    glColor3f((GLfloat)184/255, (GLfloat)115/255, (GLfloat)51/255);
-    //Front Face
-    glBegin(GL_POLYGON);
-        glNormal3f(0, 0, 1.0);
-        glVertex3f(-0.5, 0.25, 0.25);
-        glVertex3f(0.5, 0.25, 0.25);
-        glVertex3f(0.5, -0.25, 0.25);
-        glVertex3f(-0.5, -0.25, 0.25);
-    glEnd();
-    
-//    glColor3f(0, 1, 1);
-    //Right Face
-    glBegin(GL_POLYGON);
-        glNormal3f(1.0, 0, 0);
-        glVertex3f(0.5, 0.25, 0.25);
-        glVertex3f(0.5, 0.25, -0.25);
-        glVertex3f(0.5, -0.25, -0.25);
-        glVertex3f(0.5, -0.25, 0.25);
-    glEnd();
-    
-//    glColor3f(1, 0, 1);
-    //Back Face
-    glBegin(GL_POLYGON);
-        glNormal3f(0, 0, -1);
-        glVertex3f(0.5, 0.25, -0.25);
-        glVertex3f(-0.5, 0.25, -0.25);
-        glVertex3f(-0.5, -0.25, -0.25);
-        glVertex3f(0.5, -0.25, -0.25);
-    glEnd();
-    
-//    glColor3f(1, 0.5, 0.2);
-    //Left Face
-    glBegin(GL_POLYGON);
-        glNormal3f(-1, 0, 0);
-        glVertex3f(-0.5, 0.25, -0.25);
-        glVertex3f(-0.5, 0.25, 0.25);
-        glVertex3f(-0.5, -0.25, 0.25);
-        glVertex3f(-0.5, -0.25, -0.25);
-    glEnd();
-    
-//    glColor3f(0.2, 0.5, 0);
-    //Top Face
-    glBegin(GL_POLYGON);
-        glNormal3f(0, 1, 0);
-        glVertex3f(-0.5, 0.25, -0.25);
-        glVertex3f(0.5, 0.25, -0.25);
-        glVertex3f(0.5, 0.25, 0.25);
-        glVertex3f(-0.5, 0.25, 0.25);
-    glEnd();
-    
-//    glColor3f(1, 0.9, 0);
-    //Bottom Face
-    glBegin(GL_POLYGON);
-        glNormal3f(0, -1, 0);
-        glVertex3f(-0.5, -0.25, -0.25);
-        glVertex3f(0.5, -0.25, -0.25);
-        glVertex3f(0.5, -0.25, 0.25);
-        glVertex3f(-0.5, -0.25, 0.25);
-    glEnd();
-//    glutSolidCube(0.5);
-}
 void draw_cylinder(GLfloat radius,
                    GLfloat height,
                    GLubyte R,
