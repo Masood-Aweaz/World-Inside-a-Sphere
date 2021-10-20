@@ -5,59 +5,8 @@
 //  Created by Masood Aweaz on 14/10/21.
 //
 
-/*#include <iostream>
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
-}
-*/
 
-/*#define GL_SILENCE_DEPRECATION
-#include <random>
-#include <GL/glut.h>
-#include <cstdlib>
-#define PI 3.14
-#include <unistd.h>
-#include <stdio.h>
-#include <iostream>
-
-void shapes()
-{
-    glClear(GL_COLOR_BUFFER_BIT);
-    glBegin(GL_TRIANGLES);
-        GLUquadricObj *quadratic;
-        quadratic = gluNewQuadric();
-        //glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
-        gluCylinder(quadratic,0.1f,0.1f,3.0f,32,32);
-    
-}
-
-int main(int argc,char* argv[])
-{
-    glutInit(&argc, argv);
-    
-    glutInitWindowSize(640, 640);
-    
-    glutInitWindowPosition(10, 10);
-    
-    glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH);
-    
-    glutCreateWindow("Inside a box");
-    
-    glClearColor(1,1,1,0);
-    
-    glutDisplayFunc(shapes);
-    
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(0, 1024, 0, 720);
-    
-    glutMainLoop();
-    
-}
-*/
 
 #define GL_SILENCE_DEPRECATION
 #include <GLUT/glut.h>
