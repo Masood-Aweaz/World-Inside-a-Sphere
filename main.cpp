@@ -203,6 +203,57 @@ void draw_cylinder(GLfloat radius,
     glEnd();
 }
 
+void tetrahedron() {
+  // Draw the tetrahedron.  It is a four sided figure, so when defining it
+  // with a triangle strip we have to repeat the last two vertices.
+  glBegin(GL_TRIANGLE_STRIP);
+    glColor3f(1, 1, 1); glVertex3f(0, 2, 0);
+    glColor3f(1, 0, 0); glVertex3f(-1, 0, 1);
+    glColor3f(0, 1, 0); glVertex3f(1, 0, 1);
+    glColor3f(0, 0, 1); glVertex3f(0, 0, -1.4);
+    glColor3f(1, 1, 1); glVertex3f(0, 2, 0);
+    glColor3f(1, 0, 0); glVertex3f(-1, 0, 1);
+  glEnd();
+
+  glFlush();
+}
+
+void hexagonalPrism()
+{
+    float x[] = { 0.866f, 0.0f, -0.866f, -0.866f,  0.0f,  0.866f };
+    float y[] = { 0.5f,   1.0f,  0.5f,   -0.5f,   -1.0f, -0.5f };
+
+    glBegin(GL_QUADS);
+    for (int i1 = 0; i1 < 6; ++i1)
+    {
+        glColor4f(
+          i1 < 2 || i1 > 4 ? 1.0f : 0.0f,
+          i1 > 0 && i1 < 5 ? 1.0f : 0.0f,
+          i1 > 2 ? 1.0f : 0.0f,
+          1.0f
+        );
+
+        int i2 = (i1 + 1) % 6;
+        glVertex3f(x[i1], 0.0f, y[i1]);
+        glVertex3f(x[i2], 0.0f, y[i2]);
+        glVertex3f(x[i2], 1.0f, y[i2]);
+        glVertex3f(x[i1], 1.0f, y[i1]);
+    }
+    glEnd();
+
+    glColor4f( 1, 1, 1, 1 );
+
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 6; ++i)
+        glVertex3f(x[i], 0.0f, y[i]);
+    glEnd();
+    glBegin(GL_POLYGON);
+    for (int i = 0; i < 6; ++i)
+        glVertex3f(x[i], 1.0f, y[i]);
+    glEnd();
+}
+
+
 void scene(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
