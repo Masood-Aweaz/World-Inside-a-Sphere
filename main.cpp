@@ -12,10 +12,17 @@
 #include <GLUT/glut.h>
 #include <unistd.h>
 #include <cmath>
+#include <math.h>
+#include <ctime>
+
+#include <iostream>
+using namespace std;
 
 #define PI 3.14
 
 void timerCallBack();
+void handleKeyboard(unsigned char , int , int );
+void handleKeyboardSpecial(int, int, int);
 void initLight();
 void setMaterial(GLfloat , GLfloat , GLfloat ,
                  GLfloat , GLfloat , GLfloat ,
@@ -26,6 +33,22 @@ void coloredCuboid();
 
 float thetha = 0;
 float camx, camz;
+GLuint ind = 0; //Gets the index of all the objects
+float theta = 0, phi = 0;
+float camx = 0, camy = 0, camz = 3;
+float zoom = 3;
+float cuaxisx = 0, cuaxisy = 0, cuaxisz = 0; //Required For rotation for cylinder (index : 2)
+float cutransx = 0.6, cutransy = 0, cutransz = 0; //Required For translation for cylinder (index : 2)
+float hpaxisx = 0, hpaxisy = 0, hpaxisz = 0; //Required For rotation for hexagonal prism (index : 1)
+float hptransx = 1.8, hptransy = -0.25, hptransz = 0; //Required For translation for hexagonal prism  (index : 1)
+float thaxisx = 0, thaxisy = 0, thaxisz = 0; //Required For rotation for Tetrahedron (index : 3)
+float thtransx = -0.6, thtransy = -0.25, thtransz = 0; //Required For translation for Tetrahedron (index : 3)
+int mulcu = 1; //Multiplier for cylinder (index : 2)
+int mulhp = 1; //Multiplier for hexagonal prism (index : 1)
+int multh = 1; //Multiplier for TTetrahedron (index : 3)
+float prev_mx =0, curr_mx = 0;
+float prev_my = 0, curr_my = 0;
+
 
 int main(int argc, char **argv){
     //Initialise GLUT
@@ -60,13 +83,56 @@ int main(int argc, char **argv){
 
 
 void timerCallBack(){
-    thetha++;
-    float rad = thetha * PI/100;
-    camx = cos(rad);
-    camz = sin(rad);
+    theta = theta + 1;
+//    float rad = theta * PI/100;
+//    camx = cos(rad);
+//    camz = sin(rad);
+    
+    srand((unsigned)time(NULL));
+    
+    if(ind!=2){
+        cutransx = cutransx + mulcu*((double)rand()/(RAND_MAX))/60;
+        cutransy = cutransy + mulcu*((double)rand()/(RAND_MAX))/60;
+        cutransz = cutransz + mulcu*((double)rand()/(RAND_MAX))/60;
+        double distcu = pow(cutransx, 2.0f) + pow(cutransy, 2.0f) + pow(cutransz, 2.0f);
+        
+        if(distcu>=9){
+            if(mulcu==1)
+                mulcu = -1;
+            else
+                mulcu = 1;
+        }
+    }
+    
+    if(ind!=1){
+        hptransx = hptransx + mulhp*((double)rand()/(RAND_MAX))/50;
+        hptransy = hptransy + mulhp*((double)rand()/(RAND_MAX))/50;
+        hptransz = hptransz + mulhp*((double)rand()/(RAND_MAX))/50;
+        double disthp = pow(hptransx, 2.0f) + pow(hptransy, 2.0f) + pow(hptransz, 2.0f);
+        if(disthp>=9){
+            if(mulhp==1)
+                mulhp = -1;
+            else
+                mulhp = 1;
+        }
+    }
+    
+    if(ind!=3){
+        thtransx = thtransx + multh*((double)rand()/(RAND_MAX))/50;
+        thtransy = thtransy + multh*((double)rand()/(RAND_MAX))/50;
+        thtransz = thtransz + multh*((double)rand()/(RAND_MAX))/50;
+        double distth = pow(thtransx, 2.0f) + pow(thtransy, 2.0f) + pow(thtransz, 2.0f);
+        if(distth>=9){
+            if(multh==1)
+                multh = -1;
+            else
+                multh = 1;
+        }
+    }
     usleep(3*10000);
     glutPostRedisplay();
 }
+
 
 void initLight(){
     float ambient[] = {0.3, 0.3, 0.3, 1};
