@@ -133,6 +133,126 @@ void timerCallBack(){
     glutPostRedisplay();
 }
 
+void handleKeyboard(unsigned char key, int x, int y){
+    
+    switch(key){
+        case '-': zoom++;
+            break;
+        case '=': zoom--;
+            break;
+        default:
+            break;
+    }
+    
+    //For Rotation
+    if(ind == 1){
+        //First hexagonal prism
+        //Do rotation
+        switch(key){
+            case 'x': hpaxisx!=1?hpaxisx=1:hpaxisx=0;
+                break;
+            case 'y': hpaxisy!=1?hpaxisy=1:hpaxisy=0;
+                break;
+            case 'z': hpaxisz!=1?hpaxisz=1:hpaxisz=0;;
+                break;
+        }
+    }
+    
+    if(ind == 2){
+        //First hexagonal prism
+        //Do rotation
+        switch(key){
+            case 'x': cuaxisx!=1?cuaxisx=1:cuaxisx=0;
+                break;
+            case 'y': cuaxisy!=1?cuaxisy=1:cuaxisy=0;
+                break;
+            case 'z': cuaxisz!=1?cuaxisz=1:cuaxisz=0;;
+                break;
+        }
+    }
+    
+    if(ind == 3){
+        //First hexagonal Prism
+        //Do rotation
+        switch(key){
+            case 'x': thaxisx!=1?thaxisx=1:thaxisx=0;
+                break;
+            case 'y': thaxisy!=1?thaxisy=1:thaxisy=0;
+                break;
+            case 'z': thaxisz!=1?thaxisz=1:thaxisz=0;;
+                break;
+        }
+    }
+    //Rotation Done
+    glutPostRedisplay();
+}
+
+void handleKeyboardSpecial(int key, int x, int y){
+    if(ind == 1){
+        switch(key){
+            case GLUT_KEY_UP: hptransy = hptransy + mulhp*0.2;
+                break;
+            case GLUT_KEY_DOWN: hptransy = hptransy - mulhp*0.2;
+                break;
+            case GLUT_KEY_LEFT: hptransx = hptransx - mulhp*0.2;
+                break;
+            case GLUT_KEY_RIGHT: hptransx = hptransx + mulhp*0.2;
+                break;
+            default:
+                break;
+        }
+        double disthp = pow(hptransx, 2.0f) + pow(hptransy, 2.0f) + pow(hptransz, 2.0f);
+        if(disthp>=9){
+            if(mulhp==1)
+                mulhp = -1;
+            else
+                mulhp = 1;
+        }
+    }
+    if(ind == 2){
+        switch(key){
+            case GLUT_KEY_UP: cutransy = cutransy + mulcu*0.2;
+                break;
+            case GLUT_KEY_DOWN: cutransy = cutransy - mulcu*0.2;
+                break;
+            case GLUT_KEY_LEFT: cutransx = cutransx - mulcu*0.2;
+                break;
+            case GLUT_KEY_RIGHT: cutransx = cutransx + mulcu*0.2;
+                break;
+            default:
+                break;
+        }
+        double distcu = pow(cutransx, 2.0f) + pow(cutransy, 2.0f) + pow(cutransz, 2.0f);
+        
+        if(distcu>=9){
+            if(mulcu==1)
+                mulcu = -1;
+            else
+                mulcu = 1;
+        }
+    }
+    if(ind == 3){
+        switch(key){
+            case GLUT_KEY_UP: thtransy = thtransy + multh*0.2;
+                break;
+            case GLUT_KEY_DOWN: thtransy = thtransy - multh*0.2;
+                break;
+            case GLUT_KEY_LEFT: thtransx = thtransx - multh*0.2;
+                break;
+            case GLUT_KEY_RIGHT: thtransx = thtransx + multh*0.2;
+                break;
+            default:
+                break;
+        }
+        double distth = pow(thtransx, 2.0f) + pow(thtransy, 2.0f) + pow(thtransz, 2.0f);
+        if(distth>=9){
+            if(multh==1)
+                multh = -1;
+            else
+                multh = 1;
+        }
+    }
+}
 
 void initLight(){
     float ambient[] = {0.3, 0.3, 0.3, 1};
