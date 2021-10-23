@@ -254,6 +254,50 @@ void handleKeyboardSpecial(int key, int x, int y){
     }
 }
 
+void handleMouseMotion(int x, int y){
+    
+    float rad_theta = theta * PI / 180;
+    float rad_phi = phi * PI / 180;
+    float radius = 3;
+    curr_mx = x;
+    curr_my = y;
+
+
+    float eyeZ = radius * cos(rad_theta) * cos(rad_phi);
+    float eyeX = radius * sin(rad_theta) * cos(rad_phi);
+    float eyeY = radius * sin(rad_phi);
+    float dtheta = (curr_mx - prev_mx) / 50;
+    float dphi = (curr_my - prev_my) / 50;
+
+    theta -= dtheta;
+    phi -= dphi;
+    camx = eyeX;
+    camy = eyeY;
+    camz = eyeZ;
+
+    glutPostRedisplay();
+}
+
+void handleMouse(int button, int state, int x, int y){
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        prev_mx = curr_mx = x;
+        prev_my = curr_my = y;
+    }
+    
+    if(state != GLUT_DOWN)
+        return;
+    float window_height = glutGet(GLUT_WINDOW_HEIGHT);
+
+//      GLbyte color[4];
+//      GLfloat depth;
+//
+//      glReadPixels(x, window_height - y - 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
+//      glReadPixels(x, window_height - y - 1, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+    glReadPixels(x, window_height - y - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &ind);
+    printf("Clicked on pixel stencil index %u\n",ind);
+}
+
+
 void initLight(){
     float ambient[] = {0.3, 0.3, 0.3, 1};
     float diffuse[] = {0.6, 0.6, 0.6, 1};
