@@ -491,6 +491,20 @@ void hexagonalPrism()
     glEnd();
 }
 
+void display(){
+    //to display the note when an object is selected and cosidered to be under the control of user
+    unsigned char str[] = "The Object Selected is Paused now you can play with it";
+    int w;
+    w = glutBitmapLength(GLUT_BITMAP_8_BY_13, str);
+
+    glRasterPos3f(0, 0, 0.);
+    glColor3f(1., 0., 0.);
+    int leng = 54;
+    for (int i = 0; i < leng; i++) {
+        glutBitmapCharacter(GLUT_BITMAP_8_BY_13, str[i]);
+    }
+    usleep(10*1000);
+}
 
 void scene(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
