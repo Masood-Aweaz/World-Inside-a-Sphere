@@ -28,7 +28,7 @@ void setMaterial(GLfloat , GLfloat , GLfloat ,
                  GLfloat , GLfloat , GLfloat ,
                  GLfloat , GLfloat , GLfloat ,
                  int );
-void scene();
+void create_scene();
 void coloredCuboid();
 void draw_cylinder(GLfloat,GLfloat ,GLubyte ,GLubyte ,GLubyte );
 void display();
@@ -506,24 +506,53 @@ void display(){
     usleep(10*1000);
 }
 
-void scene(){
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+void create_scene(){
+    glClearStencil(0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    
+    
     //Camera Adjusments
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(5*camx, 2.5, 5*camz, 0, 0, 0, 0, 1, 0);
-//    glRotatef(thetha, 0, 1, 0);
-    //--------------------
-    
+    gluLookAt(zoom*camx, zoom*camy, zoom*camz, 0, 0, 0, 0, 1, 0);
+   
     //ambient : r,g,b diffuse: r, g, b specular: r, g, b  shininess(0-128) 0 is rough
+    setMaterial(0.5, 0.5, 0.5, 0.6, 0.6, 0.6, 0.8, 0.8, 0.8, 128);
     
-    setMaterial(0.2, 0.2, 0.2, 0.6, 0.6, 0.6, 0.8, 0.8, 0.8, 60);
+    glEnable(GL_STENCIL_TEST);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    
     glPushMatrix();
-        glRotatef(thetha, 1, 0, 0);
-        //coloredCuboid();
-        draw_cylinder(0.3, 1.0, 255, 160, 100);
+        if(hpaxisx!=0 || hpaxisy!=0 || hpaxisz!=0)
+            glRotatef(theta, hpaxisx, hpaxisy, hpaxisz);
+        glTranslatef(hptransx, hptransy, hptransz);
+//        glScalef(10.0f, 10.0f, 10.0f);
+        glStencilFunc(GL_ALWAYS, 1, -1);
+        hexagonalPrism();
     glPopMatrix();
 
+    glPushMatrix();
+        if(cuaxisx!=0 || cuaxisy!=0 || cuaxisz!=0)
+            glRotatef(theta, cuaxisx, cuaxisy, cuaxisz);
+        glTranslatef(cutransx, cutransy, cutransz);
+//        glScalef(10.0f, 10.0f, 10.0f);
+        glStencilFunc(GL_ALWAYS, 2, -1);
+        draw_cylinder(0.3, 1.0, 255, 160, 100);
+    glPopMatrix();
+    
+    glPushMatrix();
+        if(thaxisx!=0 || thaxisy!=0 || thaxisz!=0)
+            glRotatef(theta, thaxisx, thaxisy, thaxisz);
+        glTranslatef(thtransx, thtransy, thtransz);
+//        glScalef(10.0f, 10.0f, 10.0f);
+        glStencilFunc(GL_ALWAYS, 3, -1);
+        tetrahedron();
+    glPopMatrix();
+
+    glPushMatrix();
+            if(ind!=0){
+                display();
+            }
+        glPopMatrix();
     glFlush();
 }
